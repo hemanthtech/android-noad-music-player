@@ -388,7 +388,6 @@ public class MusicPlayback extends MediaBrowserServiceCompat implements
             virtualizer.release();
         } catch (Exception ignored) {}
         stopForeground(true);
-        NotificationManagerCompat.from(this).cancel(NOTIFICATION_ID);
     }
 
     private void processPauseRequest() {
@@ -681,7 +680,7 @@ public class MusicPlayback extends MediaBrowserServiceCompat implements
         builder.setColor(ContextCompat.getColor(this, (new CommonUtils(this)).accentColor(sharedPrefsUtils)));
         builder.setShowWhen(false);
         startForeground(NOTIFICATION_ID, builder.build());
-        if (!sharedPrefsUtils.readSharedPrefsBoolean("persistentNotificationPref", false)) {
+        if (!sharedPrefsUtils.readSharedPrefsBoolean("persistentNotificationPref", false) && !autoPaused) {
             stopForeground(false);
         }
     }
